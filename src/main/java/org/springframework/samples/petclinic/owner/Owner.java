@@ -33,6 +33,7 @@ import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.samples.petclinic.model.Person;
+import org.springframework.samples.petclinic.vet.Bill;
 
 /**
  * Simple JavaBean domain object representing an owner.
@@ -60,7 +61,18 @@ public class Owner extends Person {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets;
+   
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private Set<Bill> bills;
 
+
+    public Set<Bill> getBills(){
+    	return bills;
+    }
+    
+    public void setBills(Set<Bill> bills) {
+    	this.bills=bills;
+    }
 
     public String getAddress() {
         return this.address;
