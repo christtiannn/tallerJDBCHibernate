@@ -13,7 +13,7 @@ public class JDBCApplication {
 		System.out.println("-------- Test de conexión con MySQL ------------");
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			System.out.println("No encuentro el driver en el Classpath");
 			e.printStackTrace();
@@ -28,7 +28,7 @@ public class JDBCApplication {
 			if (connection != null)
 				System.out.println("Conexión establecida");	
 				statement = connection.createStatement();
-			PreparedStatement pdsmt = null; 
+			/*PreparedStatement pdsmt = null; 
 			String sql = "SELECT first_name, last_name FROM owners WHERE first_name=? OR last_name=?;";
 			pdsmt = connection.prepareStatement(sql);
 			String aux = "Davis";
@@ -36,7 +36,7 @@ public class JDBCApplication {
 			pdsmt.setString(2, aux);
 			//ResultSet rs = pdsmt.executeQuery();
 
-			/*while(rs.next()) {
+			while(rs.next()) {
 				System.out.println(rs.getString("first_name")+" - "+rs.getString("last_name"));
 			}*/
 			

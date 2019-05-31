@@ -28,18 +28,19 @@ public class Bill extends BaseEntity{
 	private Owner owner;
 	
 	@Digits(integer=10, fraction=0)
-	private Long id_num;
+	private long idNumber;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, mappedBy="bill", cascade = CascadeType.ALL)
 	private Visit visit;
 	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyyy/MM/dd")
-	private Date dateBill;
+	private Date paymentDate;
 	
 	@Digits(integer=5,fraction=2)
 	@DecimalMin("0.0")
 	private double money;
-	
+
+	public Bill() {}
 }
 

@@ -16,8 +16,16 @@
 
 package org.springframework.samples.petclinic;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.samples.petclinic.vet.Specialty;
+import org.springframework.samples.petclinic.vet.SpecialtyRepositoryJPA;
+import org.springframework.samples.petclinic.vet.Vet;
+import org.springframework.samples.petclinic.vet.VetRepositoryJPA;
 
 /**
  * PetClinic Spring Boot Application.
@@ -26,10 +34,36 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
-public class PetClinicApplication {
+public class PetClinicApplication implements CommandLineRunner {
 
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(PetClinicApplication.class, args);
-    }
+	@Autowired
+	VetRepositoryJPA vetrepositJpa;
+	@Autowired
+	SpecialtyRepositoryJPA spec;
+
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(PetClinicApplication.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		Vet vt = new Vet();
+		vt.setFirstName("Benito");
+		vt.setLastName("Perez");
+		vt = vetrepositJpa.save(vt);
+		if (vt.getId() > 0) {
+			Specialty sp = new Specialty();
+			sp.setName("perritos");
+			sp = spec.save(sp);
+			Specialty sp1 = spec.findOne(1); // Selecciono especialidad por id
+			vt.addSpecialty(sp1); // La añado al Vet
+			vetrepositJpa.save(vt); // Guardo Vet
+		} else {
+			System.out.println("Error");
+		}
+
+		List<Vet> allVet = vetrepositJpa.findAll();
+		allVet.hashCode();//Pa' na'.
+	}
 
 }

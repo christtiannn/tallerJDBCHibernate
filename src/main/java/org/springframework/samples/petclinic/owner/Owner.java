@@ -34,6 +34,7 @@ import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.samples.petclinic.model.Person;
 import org.springframework.samples.petclinic.vet.Bill;
+import org.springframework.samples.petclinic.visit.Visit;
 
 /**
  * Simple JavaBean domain object representing an owner.
@@ -61,11 +62,27 @@ public class Owner extends Person {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets;
-   
+    
+    public void setPets(Set<Pet> pets) {
+    	this.pets=pets;
+    }
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private Set<Visit> visits;
+    
+    
+    public Set<Visit> getVisits(){
+    	return visits;
+    }
+    
+    public void setVisits(Set<Visit> visits) {
+    	this.visits=visits;
+    }
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Bill> bills;
-
-
+    
+    
     public Set<Bill> getBills(){
     	return bills;
     }

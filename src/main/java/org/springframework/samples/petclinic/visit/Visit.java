@@ -20,6 +20,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,6 +30,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.BaseEntity;
+import org.springframework.samples.petclinic.owner.Owner;
 import org.springframework.samples.petclinic.vet.Bill;
 
 /**
@@ -60,13 +63,25 @@ public class Visit extends BaseEntity {
      */
     @Column(name = "pet_id")
     private Integer petId;
-
+    
+    @ManyToOne
+    @JoinColumn(name="owner")
+    private Owner owner;
+    
+    public Owner getOwner() {
+    	return owner;
+    }
+    
     @OneToOne(fetch = FetchType.LAZY)
     private Bill bill;
 
 
     public Bill getBill(){
     	return bill;
+    }
+    
+    public void setOwner(Owner owner) {
+    	this.owner = owner;
     }
     
     public void setBill(Bill bill){
